@@ -25,7 +25,7 @@
 画像の水増し python 3.6~（f文字列）
 
 WERアプリ
-[app/requirements.txt](/app/requirements.txt)
+[requirements.txt](/requirements.txt)
 
 ## Usage
 ### 画像の水増し
@@ -46,5 +46,5 @@ WERアプリ
 モデル、重み、学習履歴、学習過程の図が保存される。
 
 ### WEBアプリケーション
-[app/app.py](/app/app.py)を実行する。  
+[app.py](/app.py)を実行する。  
 localhost:5000から確認できる。  
