@@ -1,4 +1,4 @@
-# care-label-app
+# care-label
 画像認識による洗濯表示の識別
 
 ## Description
