@@ -76,13 +76,12 @@ def predict():
 
             image = Image.open(img)
             ###############################################################
-            print("Starting detection")
-            print("image_type: ", type(image))
-            print("img ", img)
-            r_image = yolo.detect_image(image)
+            result = yolo.detect_image(image)
             yolo.close_session()
-            print("End of detection")
 
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            [ print(f"{label} ({score}%)") for label, score in result.items()]
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             ###############################################################
             image = image.convert("RGB")
             image = image.resize((image_size, image_size))
