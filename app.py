@@ -24,8 +24,16 @@ UPLOAD_FOLDER = './uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = os.urandom(24)
 
-
 CORS(app)
+
+sys.path.append("./keras_yolo3/")
+from keras_yolo3.yolo import YOLO
+
+yolo = YOLO(
+    image=True,
+    classes_path="keras_yolo3/model_data/coco_classes.txt",
+    model_path="keras_yolo3/model_data/yolo.h5",
+    anchors_path="keras_yolo3/model_data/yolo_anchors.txt")
 
 @app.route('/',methods=['GET','POST'])
 def index():
@@ -68,6 +76,14 @@ def predict():
                 image = Image.open(img)
                 image = image.convert("RGB")
                 image = image.resize((image_size, image_size))
+                ###############################################################
+                print("Starting detection")
+                r_image = yolo.detect_image(image)
+                r_image.save("tmp.png")
+                yolo.close_session()
+                print("End of detection")
+
+                ###############################################################
                 data = np.asarray(image)
                 X = np.array(data)
                 X = X.astype('float32')
@@ -176,7 +192,8 @@ def predict():
                 pre3_detail = details[other_labels[2]]
                 pre3_pro = str(round(other_pros[2] * 100)) + '%'
 
-            except:
+            except Exception as e:
+                print("Error: ", e)
                 return render_template('index.html',massege = "解析出来ませんでした",color = "red")
 
             buf = io.BytesIO()
