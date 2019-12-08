@@ -27,9 +27,11 @@ app.config['SECRET_KEY'] = os.urandom(24)
 CORS(app)
 
 sys.path.append("./keras_yolo3/")
-from keras_yolo3.yolo import YOLO
 
-yolo = YOLO(
+
+from my_yolo import MyYOLO
+
+yolo = MyYOLO(
     classes_path="keras_yolo3/model_data/coco_classes.txt",
     model_path="keras_yolo3/model_data/yolo.h5",
     anchors_path="keras_yolo3/model_data/yolo_anchors.txt")
