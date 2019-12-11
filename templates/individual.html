@@ -37,12 +37,12 @@
             このWEBアプリ「wash mark checker」は、アップロードされた画像から洗濯表示を予測し意味を表示します。<br>
         </p>
 
-        <a href="/individual">洗濯表示を個別に調べたい場合はこちら</a>
+        <a href="/">洗濯表示をまとめて調べたい場合はこちら</a>
 
         <hr>
 
-        <form id="uploadForm"  action="/predict" method="POST"  enctype="multipart/form-data">
-            画像をアップロードしてください<br>
+        <form id="uploadForm"  action="/predict_individual" method="POST"  enctype="multipart/form-data">
+            画像をアップロードしてください（1:1推奨）<br>
             <div class="input-group">
                 <label class="input-group-btn">
                     <span class="btn btn-primary">
@@ -62,19 +62,47 @@
             <div id="result">
                 <div>
                   <h2>予測結果</h2>
-                    <img src={{img}} alt="予測画像" title="予測画像" style="width: 100%;">
+                    アップロードされた画像<br>
+                    <img src={{img}} alt="今回の画像" title="今回の画像" style="width: 50%;">
                 </div>
                 <hr>
+                <div>
+                    <h4>1.</h4>
+                    <p>{{ pre1_pro }}</p>
+                    <p><img src="{{ pre1_img_url }}"></img><p>
+                    <h3>{{ pre1_detail }}</h3>
+
+                </div>
+                <hr>
+                <div>
+                    <h5>2.</h5>
+                    <p>{{ pre2_pro }}</p>
+                    <p><img src="{{ pre2_img_url }}"></img><p>
+                    <h3>{{ pre2_detail }}</h3>
+                </div>
+                <hr>
+                <div>
+                    <h5>3.</h5>
+                    <p>{{ pre3_pro }}</p>
+                    <p><img src="{{ pre3_img_url }}"></img><p>
+                    <h3>{{ pre3_detail }}</h3>
+                </div>
             </div>
+
         {% else %}
             <div>
                 <h3>使い方</h3>
                 <h4>1. 洗濯タグの画像を撮影する</h4>
                 <img src="/uploads/sample-tag.jpg" style="width: 40%;"></img>
                 <br><br>
-                <h4>2. アップロードする</h4>
+                <h4>2. 対象の洗濯表示をトリミングする（1:1）</h4>
+                <img src="/uploads/sample-mark.jpg" style="width: 30%;"></img>
+                <br><br>
+                <h4>3. アップロードする</h4>
+                <img src="/uploads/sample-upload.png" style="width: 40%;"></img>
                 <br><br>
                 <h4>4. 完了</h4>
+                <img src="/uploads/sample-result.png" style="width: 80%;"></img>
             </div>
         {% endif %}
     </div>

@@ -58,21 +58,6 @@ def predict():
             if ext not in gazouketori:
                 return render_template('index.html',massege = "対応してない拡張子です",color = "red")
             print("success")
-            #  try:
-
-            # img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # img_url = '/uploads/' + filename
-
-            # graph = tf.get_default_graph()
-            # backend.clear_session() # 2回以上連続してpredictするために必要な処理
-            # # モデルの読み込み
-            # model = model_from_json(open('and_1.json', 'r').read())
-            #
-            # # 重みの読み込み
-            # model.load_weights('and_1_weight.hdf5')
-            #
-            #
-            # image_size = 50
 
             image = Image.open(img)
 
@@ -91,18 +76,67 @@ def predict():
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             [ print(f"{label} ({score}%)") for label, score in result.items()]
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            ###############################################################
-            # image = image.convert("RGB")
-            # image = image.resize((image_size, image_size))
-            # data = np.asarray(image)
-            # X = np.array(data)
-            # X = X.astype('float32')
-            # X = X / 255.0
-            # X = X[None, ...]
-            #
-            # prd = model.predict(X)
-            # other_labels = np.argsort(prd)[0][::-1][:3]
-            # other_pros = [prd[0][other_labels[0]], prd[0][other_labels[1]], prd[0][other_labels[2]]]
+
+            buf = io.BytesIO()
+            result_img.save(buf, 'png')
+            qr_b64str = base64.b64encode(buf.getvalue()).decode("utf-8")
+            qr_b64data = "data:image/png;base64,{}".format(qr_b64str)
+
+            return render_template('index.html', img=qr_b64data)
+    else:
+        print("get request")
+
+    return render_template('index.html')
+
+@app.route('/individual',methods=['GET','POST'])
+def individual():
+    return render_template('individual.html')
+
+@app.route('/predict_individual', methods=['GET','POST'])
+def predict_individual():
+    if request.method == "POST":
+        if 'file' not in request.files:
+            print("ファイルがありません")
+        else:
+            img = request.files["file"]
+            filename = secure_filename(img.filename)
+
+            root, ext = os.path.splitext(filename)
+            ext = ext.lower()
+
+            gazouketori = set([".jpg", ".jpeg", ".jpe", ".jp2", ".png", ".webp", ".bmp", ".pbm", ".pgm", ".ppm",
+                      ".pxm", ".pnm",  ".sr",  ".ras", ".tiff", ".tif", ".exr", ".hdr", ".pic", ".dib"])
+            if ext not in gazouketori:
+                return render_template('individual.html',massege = "対応してない拡張子です",color = "red")
+            print("success")
+            #  try:
+
+            # img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # img_url = '/uploads/' + filename
+
+            graph = tf.get_default_graph()
+            backend.clear_session() # 2回以上連続してpredictするために必要な処理
+            # モデルの読み込み
+            model = model_from_json(open('and_1.json', 'r').read())
+
+            # 重みの読み込み
+            model.load_weights('and_1_weight.hdf5')
+
+
+            image_size = 50
+
+            image = Image.open(img)
+            image = image.convert("RGB")
+            image = image.resize((image_size, image_size))
+            data = np.asarray(image)
+            X = np.array(data)
+            X = X.astype('float32')
+            X = X / 255.0
+            X = X[None, ...]
+
+            prd = model.predict(X)
+            other_labels = np.argsort(prd)[0][::-1][:3]
+            other_pros = [prd[0][other_labels[0]], prd[0][other_labels[1]], prd[0][other_labels[2]]]
 
             details = [
                    '水温95℃を限度に、洗濯機で洗えます。',
@@ -190,39 +224,51 @@ def predict():
                     'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon110c.gif']
 
 
-            # pre1_img_url = icons[other_labels[0]]
-            # pre1_detail = details[other_labels[0]]
-            # pre1_pro = str(round(other_pros[0] * 100)) + '%'
-            #
-            # pre2_img_url = icons[other_labels[1]]
-            # pre2_detail = details[other_labels[1]]
-            # pre2_pro = str(round(other_pros[1] * 100)) + '%'
-            #
-            # pre3_img_url = icons[other_labels[2]]
-            # pre3_detail = details[other_labels[2]]
-            # pre3_pro = str(round(other_pros[2] * 100)) + '%'
+            pre1_img_url = icons[other_labels[0]]
+            pre1_detail = details[other_labels[0]]
+            pre1_pro = str(round(other_pros[0] * 100)) + '%'
 
-            #  except Exception as e:
-                #  print("Error: ", e)
-                #  exc_type, exc_obj, exc_tb = sys.exc_info()
-                #  fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-                #  print(exc_type, fname, exc_tb.tb_lineno)
-                #  return render_template('index.html',massege = "解析出来ませんでした",color = "red")
+            pre2_img_url = icons[other_labels[1]]
+            pre2_detail = details[other_labels[1]]
+            pre2_pro = str(round(other_pros[1] * 100)) + '%'
 
-            # buf = io.BytesIO()
-            # image = Image.open(img)
-            # image.save(buf, 'png')
+            pre3_img_url = icons[other_labels[2]]
+            pre3_detail = details[other_labels[2]]
+            pre3_pro = str(round(other_pros[2] * 100)) + '%'
+
+            kwargs = {
+                "pre1_img_url" : pre1_img_url,
+                "pre1_detail"  : pre1_detail,
+                "pre1_pro"     : pre1_pro,
+                "pre2_img_url" : pre2_img_url,
+                "pre2_detail"  : pre2_detail,
+                "pre2_pro"     : pre2_pro,
+                "pre3_img_url" : pre3_img_url,
+                "pre3_detail"  : pre3_detail,
+                "pre3_pro"     : pre3_pro
+            }
+
+             # except Exception as e:
+             #     print("Error: ", e)
+             #     exc_type, exc_obj, exc_tb = sys.exc_info()
+             #     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+             #     print(exc_type, fname, exc_tb.tb_lineno)
+             #     return render_template('index.html',massege = "解析出来ませんでした",color = "red")
 
             buf = io.BytesIO()
-            result_img.save(buf, 'png')
+            image = Image.open(img)
+            image.save(buf, 'png')
+
             qr_b64str = base64.b64encode(buf.getvalue()).decode("utf-8")
             qr_b64data = "data:image/png;base64,{}".format(qr_b64str)
 
-            return render_template('index.html', img=qr_b64data)
+
+
+            return render_template('individual.html', img=qr_b64data, **kwargs)
     else:
         print("get request")
 
-    return render_template('index.html')
+    return render_template('individual.html')
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
