@@ -65,6 +65,12 @@
                     <img src={{img}} alt="予測画像" title="予測画像" style="width: 100%;">
                 </div>
                 <hr>
+                {% for icon, detail, score in results %}
+                  <img src="{{icon}}" style="width: 20%;">
+                  <p>{{detail}}</p>
+                  <p>信頼度 : {{score}}<p>
+                  <hr>
+                {% endfor %}
             </div>
         {% else %}
             <div>

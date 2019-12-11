@@ -60,8 +60,6 @@ def predict():
             print("success")
 
             image = Image.open(img)
-
-            ###############################################################
             image_size_yolo = 320
             rgb_im = image.convert('RGB')
             rgb_im.thumbnail([image_size_yolo,image_size_yolo])
@@ -74,15 +72,106 @@ def predict():
             # yolo.close_session()
 
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            [ print(f"{label} ({score}%)") for label, score in result.items()]
+            [ print(f"{label} ({score})") for label, score in result.items()]
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+            icons = [
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/95c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/70c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/60c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/60cw.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/50c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/50cw.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/40c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/40cw.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/40cww.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/30c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/30cw.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/30cww.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hand40c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/ng.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/ensosanso-hyouhaku-2.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/sanso-hyouhaku-2.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/ensosanso-hyouhaku-3.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/tanb80c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/tanb60c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/tanb-ng.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi-nure.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi-nure.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi-hikage.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi-hikagenure.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi-hikage.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi-nurehikage.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon200c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon150c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon110c.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon-ng.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/pfdry.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/pfdryw.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/fdry.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/fdryw.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/dry-ng.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwet.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwetw.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwetww.gif',
+                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwet-ng.gif']
+
+            details = [
+                   '水温95℃を限度に、洗濯機で洗えます。',
+                   '水温70℃を限度に、洗濯機で洗えます。',
+                   '水温60℃を限度に、洗濯機で洗えます。',
+                   '水温60℃を限度に、洗濯機で弱い洗濯ができます。',
+                   '水温50℃を限度に、洗濯機で洗えます。',
+                   '水温50℃を限度に、洗濯機で弱い洗濯ができます。',
+                   '水温40℃を限度に、洗濯機で洗えます',
+                   '水温40℃を限度に、洗濯機で弱い洗濯ができます。',
+                   '水温40℃を限度に、洗濯機で非常に弱い洗濯ができます。',
+                   '水温30℃を限度に、洗濯機で洗えます。',
+                   '水温30℃を限度に、洗濯機で弱い洗濯ができます。',
+                   '水温30℃を限度に、洗濯機で非常に弱い洗濯ができます。',
+                   '水温40℃を限度に、手洗いできます。',
+                   'ご家庭では洗えません。',
+                   '塩素系・酸素系漂白剤で、漂白できます。',
+                   '酸素系漂白剤で、漂白できます。塩素系漂白剤ではできません。',
+                   '漂白できません。',
+                   '排気温度80℃を上限に、タンブル乾燥できます。',
+                   '排気温度60℃を上限に、タンブル乾燥できます。',
+                   'タンブル乾燥禁止です。',
+                   '平干しします。',
+                   '脱水せずぬれたまま、平干しします。',
+                   'ハンガー等を使って、つり干しします。',
+                   '脱水せずぬれたまま、つり干しします。',
+                   '日陰で、平干しします。',
+                   '日陰で、脱水せずぬれたまま平干しします。',
+                   '日陰で、つり干しします。',
+                   '日陰で、脱水せずぬれたままつり干しします。',
+                   '200℃を限度に、アイロンが使えます。',
+                   '150℃を限度に、アイロンが使えます。',
+                   '110℃を限度に、アイロンが使えます。',
+                   'アイロンは使えません。',
+                   'パークロロエチレン及び石油系溶剤による、ドライクリーニングができます。',
+                   'パークロロエチレン及び石油系溶剤による、弱いドライクリーニングができます。',
+                   '石油系溶剤による、ドライクリーニングができます。',
+                   '石油系溶剤による、弱いドライクリーニングができます。',
+                   'ドライクリーニングはできません。',
+                   'ウエットクリーニングができます。',
+                   '弱い操作による、ウエットクリーニングができます。',
+                   '非常に弱い操作による、ウエットクリーニングができます。',
+                   'ウエットクリーニングはできません。']
+
+
+            results = []
+            for label, score in result.items():
+                results.append([icons[int(label)-1], details[int(label)-1], str(score)])
 
             buf = io.BytesIO()
             result_img.save(buf, 'png')
             qr_b64str = base64.b64encode(buf.getvalue()).decode("utf-8")
             qr_b64data = "data:image/png;base64,{}".format(qr_b64str)
 
-            return render_template('index.html', img=qr_b64data)
+            return render_template('index.html', img=qr_b64data, results=results)
     else:
         print("get request")
 
