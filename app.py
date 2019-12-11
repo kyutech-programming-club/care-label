@@ -64,7 +64,6 @@ def predict():
 
             graph = tf.get_default_graph()
             backend.clear_session() # 2回以上連続してpredictするために必要な処理
-
             # モデルの読み込み
             model = model_from_json(open('and_1.json', 'r').read())
 
@@ -77,7 +76,7 @@ def predict():
             image = Image.open(img)
             ###############################################################
             result = yolo.detect_image(image)
-            yolo.close_session()
+            # yolo.close_session()
 
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             [ print(f"{label} ({score}%)") for label, score in result.items()]
