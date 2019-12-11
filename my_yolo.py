@@ -41,7 +41,8 @@ class MyYOLO(YOLO):
             box = out_boxes[i]
             score = out_scores[i]
 
-            label = '{} {:.2f}'.format(predicted_class, score)
+            # label = '{} {:.2f}'.format(predicted_class, score)
+            label = '{}'.format(predicted_class)
             draw = ImageDraw.Draw(image)
             label_size = draw.textsize(label, font)
 
@@ -67,5 +68,5 @@ class MyYOLO(YOLO):
                 fill=self.colors[c])
             draw.text(text_origin, label, fill=(0, 0, 0), font=font)
             del draw
-        image.show()
-        return label_score_table
+        # image.show()
+        return label_score_table, image
