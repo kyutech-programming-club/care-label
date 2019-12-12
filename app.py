@@ -171,7 +171,7 @@ def predict():
             qr_b64str = base64.b64encode(buf.getvalue()).decode("utf-8")
             qr_b64data = "data:image/png;base64,{}".format(qr_b64str)
 
-            return render_template('index.html', img=qr_b64data, results=results)
+            return render_template('index.html', img=qr_b64data, results=reversed(results))
     else:
         print("get request")
 
