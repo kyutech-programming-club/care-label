@@ -20,9 +20,6 @@ import base64
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 app = Flask(__name__)
-UPLOAD_FOLDER = './uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['SECRET_KEY'] = os.urandom(24)
 
 CORS(app)
 
@@ -31,8 +28,42 @@ sys.path.append("./keras_yolo3/")
 
 from my_yolo import MyYOLO
 
+
+def rotateImage(img, orientation):
+    """
+    iphoneでアップした画像が回転する現象対策
+    画像ファイルをOrientationの値に応じて回転させる
+    """
+    #orientationの値に応じて画像を回転させる
+    if orientation == 1:
+        pass
+    elif orientation == 2:
+        #左右反転
+        img_rotate = img.transpose(Image.FLIP_LEFT_RIGHT)
+    elif orientation == 3:
+        #180度回転
+        img_rotate = img.transpose(Image.ROTATE_180)
+    elif orientation == 4:
+        #上下反転
+        img_rotate = img.transpose(Image.FLIP_TOP_BOTTOM)
+    elif orientation == 5:
+        #左右反転して90度回転
+        img_rotate = img.transpose(Image.FLIP_LEFT_RIGHT).transpose(Image.ROTATE_90)
+    elif orientation == 6:
+        #270度回転
+        img_rotate = img.transpose(Image.ROTATE_270)
+    elif orientation == 7:
+        #左右反転して270度回転
+        img_rotate = img.transpose(Image.FLIP_LEFT_RIGHT).transpose(Image.ROTATE_270)
+    elif orientation == 8:
+        #90度回転
+        img_rotate = img.transpose(Image.ROTATE_90)
+    else:
+        pass
+
+    return img_rotate
+
 yolo = MyYOLO(
-    # classes_path="keras_yolo3/model_data/coco_classes.txt",
     classes_path="voc_classes.txt",
     model_path="trained_weights_final.h5",
     anchors_path="yolo_anchors.txt")
@@ -60,6 +91,18 @@ def predict():
             print("success")
 
             image = Image.open(img)
+
+            #exif対応
+            try:
+                #exif情報取得
+                exifinfo = image._getexif()
+                #exif情報からOrientationの取得
+                orientation = exifinfo.get(0x112, 1)
+                #画像を回転
+                image = rotateImage(image, orientation)
+            except:
+                pass
+
             image_size_yolo = 320
             rgb_im = image.convert('RGB')
             rgb_im.thumbnail([image_size_yolo,image_size_yolo])
@@ -155,10 +198,6 @@ def predict_individual():
             if ext not in gazouketori:
                 return render_template('individual.html',massege = "対応してない拡張子です",color = "red")
             print("success")
-            #  try:
-
-            # img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # img_url = '/uploads/' + filename
 
             graph = tf.get_default_graph()
             backend.clear_session() # 2回以上連続してpredictするために必要な処理
@@ -172,6 +211,18 @@ def predict_individual():
             image_size = 50
 
             image = Image.open(img)
+
+            #exif対応
+            try:
+                #exif情報取得
+                exifinfo = image._getexif()
+                #exif情報からOrientationの取得
+                orientation = exifinfo.get(0x112, 1)
+                #画像を回転
+                image = rotateImage(image, orientation)
+            except:
+                pass
+
             image = image.convert("RGB")
             image = image.resize((image_size, image_size))
             data = np.asarray(image)
@@ -293,13 +344,6 @@ def predict_individual():
                 "pre3_pro"     : pre3_pro
             }
 
-             # except Exception as e:
-             #     print("Error: ", e)
-             #     exc_type, exc_obj, exc_tb = sys.exc_info()
-             #     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-             #     print(exc_type, fname, exc_tb.tb_lineno)
-             #     return render_template('index.html',massege = "解析出来ませんでした",color = "red")
-
             buf = io.BytesIO()
             image = Image.open(img)
             image.save(buf, 'png')
@@ -314,10 +358,6 @@ def predict_individual():
         print("get request")
 
     return render_template('individual.html')
-
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.errorhandler(404)
 def not_found(error):
