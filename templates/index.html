@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>wash mark checker</title>
+    <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico" />
     <style type="text/css">
         .imagePreview {
             width: 30%;
@@ -41,6 +42,8 @@
 
         <hr>
 
+        <h2>洗濯表示をまとめて調べる</h2>
+
         <form id="uploadForm"  action="/predict" method="POST"  enctype="multipart/form-data">
             画像をアップロードしてください<br>
             <div class="input-group">
@@ -66,7 +69,7 @@
                 </div>
                 <hr>
                 {% for icon, detail, score in results %}
-                  <img src="{{icon}}" style="width: 20%;">
+                  <img src="static/img/icons/{{icon}}.gif" style="width: 20%;">
                   <p>{{detail}}</p>
                   <p>信頼度 : {{score}}<p>
                   <hr>
@@ -76,11 +79,13 @@
             <div>
                 <h3>使い方</h3>
                 <h4>1. 洗濯タグの画像を撮影する</h4>
-                <img src="/uploads/sample-tag.jpg" style="width: 40%;"></img>
+                <img src="static/img/samples/sample_tag.JPG" style="width: 20%;"></img>
                 <br><br>
                 <h4>2. アップロードする</h4>
+                <img src="static/img/samples/sample_upload.png" style="width: 20%;"></img>
                 <br><br>
                 <h4>3. 完了</h4>
+                <img src="static/img/samples/sample_results.png" style="width: 30%;"></img>
             </div>
         {% endif %}
     </div>

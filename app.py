@@ -75,49 +75,6 @@ def predict():
             [ print(f"{label} ({score})") for label, score in result.items()]
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
-            icons = [
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/95c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/70c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/60c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/60cw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/50c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/50cw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/40c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/40cw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/40cww.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/30c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/30cw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/30cww.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hand40c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/ng.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/ensosanso-hyouhaku-2.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/sanso-hyouhaku-2.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/ensosanso-hyouhaku-3.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/tanb80c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/tanb60c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/tanb-ng.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi-nure.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi-nure.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi-hikage.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi-hikagenure.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi-hikage.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi-nurehikage.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon200c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon150c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon110c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon-ng.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/pfdry.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/pfdryw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/fdry.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/fdryw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/dry-ng.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwet.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwetw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwetww.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwet-ng.gif']
-
             details = [
                    '水温95℃を限度に、洗濯機で洗えます。',
                    '水温70℃を限度に、洗濯機で洗えます。',
@@ -164,7 +121,7 @@ def predict():
 
             results = []
             for label, score in result.items():
-                results.append([icons[int(label)-1], details[int(label)-1], str(score)])
+                results.append([str(label), details[int(label)-1], str(score)])
 
             buf = io.BytesIO()
             result_img.save(buf, 'png')
@@ -270,69 +227,68 @@ def predict_individual():
                    '水温50℃を限度に、洗濯機で弱い洗濯ができます。',
                    '110℃を限度に、スチームなしでアイロンが使えます。']
 
-            icons = ['https://shopping.geocities.jp/ecoloco/images/sentaku-images/95c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/50c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/ensosanso-hyouhaku-3.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwetw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/60c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwet.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/dry-ng.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwetww.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/30cww.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/40cww.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon200c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/ng.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/cwet-ng.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/fdry.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/ensosanso-hyouhaku-2.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi-hikage.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/fdryw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi-hikage.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/pfdryw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/tanb60c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon150c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/tanb-ng.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/30c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi-nure.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi-hikagenure.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/40cw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon-ng.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hiraboshi.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/60cw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi-hikage.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/sanso-hyouhaku-2.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/30cw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/pfdry.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/hand40c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/70c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/turiboshi-nurehikage.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/tanb80c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/40c.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/50cw.gif',
-                    'https://shopping.geocities.jp/ecoloco/images/sentaku-images/airon110c.gif']
+            icons = [1,
+                    5,
+                    23,
+                    17,
+                    39,
+                    3,
+                    38,
+                    37,
+                    40,
+                    12,
+                    9,
+                    29,
+                    14,
+                    41,
+                    35,
+                    15,
+                    25,
+                    36,
+                    22,
+                    34,
+                    19,
+                    30,
+                    20,
+                    10,
+                    24,
+                    26,
+                    8,
+                    32,
+                    21,
+                    4,
+                    27,
+                    16,
+                    11,
+                    33,
+                    13,
+                    2,
+                    28,
+                    18,
+                    7,
+                    6,
+                    31]
 
-
-            pre1_img_url = icons[other_labels[0]]
+            pre1_icon = str(icons[other_labels[0]])
             pre1_detail = details[other_labels[0]]
             pre1_pro = str(round(other_pros[0] * 100)) + '%'
 
-            pre2_img_url = icons[other_labels[1]]
+            pre2_icon = str(icons[other_labels[1]])
             pre2_detail = details[other_labels[1]]
             pre2_pro = str(round(other_pros[1] * 100)) + '%'
 
-            pre3_img_url = icons[other_labels[2]]
+            pre3_icon = str(icons[other_labels[2]])
             pre3_detail = details[other_labels[2]]
             pre3_pro = str(round(other_pros[2] * 100)) + '%'
 
             kwargs = {
-                "pre1_img_url" : pre1_img_url,
+                "pre1_icon" : pre1_icon,
                 "pre1_detail"  : pre1_detail,
                 "pre1_pro"     : pre1_pro,
-                "pre2_img_url" : pre2_img_url,
+                "pre2_icon" : pre2_icon,
                 "pre2_detail"  : pre2_detail,
                 "pre2_pro"     : pre2_pro,
-                "pre3_img_url" : pre3_img_url,
+                "pre3_icon" : pre3_icon,
                 "pre3_detail"  : pre3_detail,
                 "pre3_pro"     : pre3_pro
             }
