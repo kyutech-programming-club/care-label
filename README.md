@@ -23,5 +23,5 @@
 - 意味出力
 
 ## Usage
-1. `wget --load-cookies /tmp/cookies.txt "https://drive.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://drive.google.com/uc?export=download&id=1b_ja55jRbhlhLL47IqjyTyvC-5rrHRAP' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1b_ja55jRbhlhLL47IqjyTyvC-5rrHRAP" -O trained_weights_final.h5 && rm -rf /tmp/cookies.txt`
+1. `wget --load-cookies /tmp/cookies.txt "https://drive.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://drive.google.com/uc?export=download&id=1xYyucyZy3xew9jkdQk9NCa559Qvmnwg3' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1xYyucyZy3xew9jkdQk9NCa559Qvmnwg3" -O trained_weights_final.h5 && rm -rf /tmp/cookies.txt`
 2. `python app.py`
